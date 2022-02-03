@@ -21,25 +21,24 @@
       	x = xmlDoc.getElementsByTagName('Component');
       	console.log(x.length);
       	var res=""
-      	var textForMachine = ""
       	var permissions = document.getElementById("rules").value
         		for (i = 0; i < x.length; i++) {
       		var comp = x[i].getAttribute('Name')
       		if(!comp.toLowerCase().includes("static")){
             			res += x[i].getAttribute('Name') + " " + "<br/> ";
       			textForClip += x[i].getAttribute('Name')+ " " +permissions+"\n"
-      			textForMachine +=  x[i].getAttribute('Name')+ " " +permissions+ "<br/> "
       		}
         		}
       	if(res){
       		document.getElementById("result").innerHTML =res
-      		document.getElementById("resultMachine").innerHTML = textForMachine
+      		document.getElementById("resultMachine").value = textForClip
 			document.getElementById("resultArea").style.display = "block"; 
       	}
       }
    </script>
    <label><b>Import rules</b></label><br>
-   <input type="text" value="test tetst test tetst test tetst" id="rules"/>
+   <input type="text" value="Revoked Revoked Granted Revoked Granted Revoked Revoked" id="rules" size="47"/>
+   <br>
    <br>
    <label><b>XML Goes here</b></label><br>
    <textarea onchange=xmladded() placeholder="XML Goes here" id = "txt" rows="5" cols="40"></textarea>
@@ -52,7 +51,7 @@
 		<label><b>Components for Import</b></label><br>
 		<input type="Button" value="Copy to clipboard" id="clipbutton" onclick="copyToClipBoard()"/>
 		<hr>
-		<p id="resultMachine">
-		</p>
+		<textarea id="resultMachine" rows="8" cols="80">
+		</textarea>
    </div>
 </html>
