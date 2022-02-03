@@ -17,9 +17,12 @@
 			var textForMachine = ""
 			var permissions = document.getElementById("rules").value
     		for (i = 0; i < x.length; i++) {
-        		res += x[i].getAttribute('Name') + " " + "<br/> ";
-				textForClip += x[i].getAttribute('Name')+ " " +permissions+"\n"
-				textForMachine +=  x[i].getAttribute('Name')+ " " +permissions+ "<br/> "
+				var comp = x[i].getAttribute('Name')
+				if(!comp.toLowerCase().includes("static")){
+        			res += x[i].getAttribute('Name') + " " + "<br/> ";
+					textForClip += x[i].getAttribute('Name')+ " " +permissions+"\n"
+					textForMachine +=  x[i].getAttribute('Name')+ " " +permissions+ "<br/> "
+				}
     		}
 			if(res){
 				document.getElementById("result").innerHTML =res
@@ -29,12 +32,14 @@
 	</script>
 
 <label><b>Import rules</b></label><br>
-<input type="text" value=" test tetst test tetst test tetst" id="rules">
+<input type="text" value="test tetst test tetst test tetst" id="rules">
 <br>
 
 <label><b>XML Goes here</b></label><br>
 
-<textarea onchange=xmladded() placeholder="XML Goes here" id = "txt"> </textarea>
+<textarea onchange=xmladded() placeholder="XML Goes here" id = "txt" rows="5" cols="40"> 
+
+</textarea>
 
 <br><br>
 <label><b>Components</b></label><br><hr>
