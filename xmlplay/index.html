@@ -15,29 +15,41 @@
       var xmladded = ()=>{
 		document.getElementById("resultArea").style.display = "none"; 
       	textForClip = "";
+		
       	var text = document.getElementById("txt").value
       	parser = new DOMParser();
       	xmlDoc = parser.parseFromString(text,"text/xml");
       	x = xmlDoc.getElementsByTagName('Component');
       	console.log(x.length);
       	var res=""
+		var excluded = ""
       	var permissions = document.getElementById("rules").value
+		var exList = document.getElementById("excludedInp").value
         		for (i = 0; i < x.length; i++) {
       		var comp = x[i].getAttribute('Name')
-      		if(!comp.toLowerCase().includes("static")){
+			if (!new RegExp(exList).test(comp)){
             			res += x[i].getAttribute('Name') + " " + "<br/> ";
       			textForClip += x[i].getAttribute('Name')+ "	" +permissions+"\n"
       		}
-        		}
+			else{
+				excluded += x[i].getAttribute('Name') + " " + "<br/> ";
+			}
+        }
       	if(res){
       		document.getElementById("result").innerHTML =res
       		document.getElementById("resultMachine").value = textForClip
 			document.getElementById("resultArea").style.display = "block"; 
       	}
+		  if(excluded){
+			document.getElementById("exc").innerHTML =excluded
+		  }
       }
    </script>
    <label><b>Import rules (tab separated)</b></label><br>
    <input type="text" value="Revoked	Revoked	Granted	Revoked	Granted	Revoked	Revoked" id="rules" size="55"/>
+   <br><br>
+   <label><b>Components names to exclude (case insensitive and pipe '|' separated)</b></label><br>
+   <input type="text" value="Static|Tab" id="excludedInp" size="55"/>
    <br>
    <br>
    <label><b>XML Goes here</b></label><br>
@@ -51,7 +63,12 @@
 		</textarea>
 		<br/>
 		<br/>
-		<label><b>Components</b></label><br>
+		<label><b>Excluded Components</b></label><br>
+		<hr>
+		<p id="exc">
+		</p>
+		<br/>
+		<label><b>Picked Components</b></label><br>
 		<hr>
 		<p id="result">
 		</p>
